@@ -15,5 +15,5 @@ const dataSourceOptions: DataSourceOptions = {
   synchronize: false, // Essential for production
 };
 
-const dataSource = new DataSource(dataSourceOptions);
-export default dataSource;
+const AppDataSource = new DataSource(dataSourceOptions);
+export default AppDataSource;
