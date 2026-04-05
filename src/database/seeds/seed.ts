@@ -2,8 +2,8 @@ import 'dotenv/config';
 import { DataSource } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import AppDataSource from '../data-source';
-import { RoleOrmEntity } from '../../../modules/user/infrastructure/typeorm/role.orm-entity';
-import { UserOrmEntity } from '../../../modules/user/infrastructure/typeorm/user.orm-entity';
+import { RoleOrmEntity } from '../../modules/user/infrastructure/typeorm/role.orm-entity';
+import { UserOrmEntity } from '../../modules/user/infrastructure/typeorm/user.orm-entity';
 
 async function seed() {
   const dataSource: DataSource = await AppDataSource.initialize();

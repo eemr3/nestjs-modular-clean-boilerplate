@@ -1,5 +1,6 @@
 import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import envConfig from './env.config';
 
 export interface SwaggerOptions {
   title?: string;
@@ -8,12 +9,15 @@ export interface SwaggerOptions {
   path?: string;
 }
 
-const defaults: Required<SwaggerOptions> = {
-  title: 'API',
-  description: 'Documentação da API',
-  version: '1.0',
-  path: 'docs',
-};
+const defaults: Required<SwaggerOptions> = (() => {
+  const { swagger } = envConfig();
+  return {
+    title: swagger.title,
+    description: swagger.description,
+    version: swagger.version,
+    path: swagger.path,
+  };
+})();
 
 export function setupSwagger(
   app: INestApplication,

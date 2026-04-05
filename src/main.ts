@@ -1,12 +1,13 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { DomainExceptionFilter } from './shared/exceptions/domain-exception.filter';
+import { AppExceptionFilter } from './shared/filter/app-exception.filter';
 import { ValidationPipe } from '@nestjs/common';
+import { setupSwagger } from './config/wagger.config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.setGlobalPrefix('api/v1');
+  app.setGlobalPrefix('api');
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -15,7 +16,11 @@ async function bootstrap() {
     }),
   );
 
-  app.useGlobalFilters(new DomainExceptionFilter());
+  if (process.env.NODE_ENV !== 'production') {
+    setupSwagger(app);
+  }
+
+  app.useGlobalFilters(new AppExceptionFilter());
 
   await app.listen(process.env.PORT ?? 3001);
 }
