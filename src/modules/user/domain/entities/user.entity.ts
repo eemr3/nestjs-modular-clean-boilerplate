@@ -1,4 +1,4 @@
-import { RoleEntity } from "./role.entiry";
+import { RoleEntity } from './role.entity';
 
 export class UserEntity {
   constructor(
@@ -8,7 +8,7 @@ export class UserEntity {
     public password: string,
     public role: RoleEntity,
     public isActive: boolean = true,
-  ) { }
+  ) {}
 
   deactivate() {
     this.isActive = false;

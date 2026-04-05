@@ -1,7 +1,13 @@
 import { plainToInstance } from 'class-transformer';
-import { IsEnum, IsNotEmpty, IsString, validateSync } from 'class-validator';
+import {
+  IsEnum,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  validateSync,
+} from 'class-validator';
 
-// Definimos uma classe com as regras de validação
+/** Campos obrigatórios mínimos para o app subir. Amplie conforme o projeto. */
 class EnvironmentVariables {
   @IsString()
   @IsNotEmpty()
@@ -23,24 +29,26 @@ class EnvironmentVariables {
   @IsNotEmpty()
   DB_NAME: string;
 
-  // Exemplo: Validar o ambiente
+  /** Se ausente, o `env.config` aplica o próprio fallback. */
+  @IsOptional()
   @IsEnum(['development', 'production', 'test'])
-  NODE_ENV: string;
+  NODE_ENV?: string;
 }
 
-export function validateEnv(config: Record<string, unknown>) {
-  // Converte o objeto de configuração plano para uma instância da classe
+/**
+ * Valida o objeto de variáveis de ambiente antes do ConfigModule mesclar com `load`.
+ * Devolve o mesmo `config` para não remover chaves (JWT, Swagger, Redis p/ Compose, etc.).
+ */
+export function validateEnv(config: Record<string, unknown>): Record<string, unknown> {
   const validatedConfig = plainToInstance(EnvironmentVariables, config, {
     enableImplicitConversion: true,
   });
 
-  // Executa a validação de forma síncrona
   const errors = validateSync(validatedConfig, {
     skipMissingProperties: false,
   });
 
   if (errors.length > 0) {
-    // Formata os erros para ficarem legíveis no console
     const errorMessages = errors
       .map((err) => Object.values(err.constraints || {}).join(', '))
       .join('\n - ');
@@ -48,5 +56,5 @@ export function validateEnv(config: Record<string, unknown>) {
     throw new Error(`Erro na validação do .env:\n - ${errorMessages}`);
   }
 
-  return validatedConfig;
+  return config;
 }

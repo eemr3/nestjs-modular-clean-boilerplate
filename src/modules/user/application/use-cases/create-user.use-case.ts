@@ -6,7 +6,7 @@ import {
   USER_REPOSITORY,
 } from '../../domain/repository/user.repository';
 import { ConflictError } from '../../../../shared/exceptions/conflict.error';
-import { RoleEntity } from '../../domain/entities/role.entiry';
+import { RoleEntity } from '../../domain/entities/role.entity';
 import { UserEntity } from '../../domain/entities/user.entity';
 import { UserMapper } from '../mappers/user.mapper';
 import { Role } from '../../../auth/domain/role.enum';

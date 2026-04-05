@@ -86,13 +86,14 @@ O `.env.example` cobre banco, app, Swagger, Redis (somente para o Docker Compose
 | `DB_*`          | Conexão PostgreSQL (TypeORM) |
 | `PORT`          | Porta HTTP (padrão comum no exemplo: `3001`) |
 | `NODE_ENV`      | `development` ativa Swagger e Helmet com CSP relaxado |
-| `JWT_SECRET`    | Assinatura JWT (obrigatório definir um valor forte em produção) |
+| `JWT_SECRET`    | Assinatura JWT (defina um valor forte em produção; há fallback só para dev) |
+| `JWT_EXPIRES_IN` | Tempo de vida do token (ex.: `1d`, `12h`, `3600s`) — exposto via `env.config` / `JwtModule.registerAsync` |
 | `ALLOWED_ORIGINS` | Origens CORS, separadas por vírgula |
 | `TRUST_PROXY`   | `1` ou `true` atrs de proxy (ex.: Render) |
 | `SWAGGER_*`     | Título, descrição, versão e path da UI Swagger |
 | `REDIS_*`       | Usadas pelo **docker-compose** (nome do container e porta no host); **a API Nest não usa Redis** — veja a seção Docker abaixo |
 
-O tempo de expiração do JWT está definido em `src/config/jwt.config.ts` (`expiresIn`). Ajuste lá ou evolua para ler de env se precisar.
+Segredo e expiração vêm de **`JWT_SECRET`** e **`JWT_EXPIRES_IN`** (com defaults em `src/config/env.config.ts`: `supersecret` e `1d`). O `AuthModule` usa `JwtModule.registerAsync` com `ConfigService`.
 
 ### 3. Banco local com Docker (opcional)
 

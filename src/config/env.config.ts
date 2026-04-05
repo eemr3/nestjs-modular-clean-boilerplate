@@ -23,5 +23,9 @@ export default () => ({
       name: process.env.DB_NAME,
     },
   },
-  // podera adicionar mais configurações aqui conforme necessário, como JWT, Firebase Auth, Rate Limit e demais configurações.
+  jwt: {
+    secret: process.env.JWT_SECRET || 'supersecret',
+    expiresIn: process.env.JWT_EXPIRES_IN || '1d',
+  },
+  // podera adicionar mais configurações aqui conforme necessário, como  Firebase Auth, Rate Limit e demais configurações.
 });

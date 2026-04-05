@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { IUserRepository } from '../../domain/repository/user.repository';
 import { UserEntity } from '../../domain/entities/user.entity';
 import { UserOrmEntity } from './user.orm-entity';
-import { RoleEntity } from '../../domain/entities/role.entiry';
+import { RoleEntity } from '../../domain/entities/role.entity';
 import { RoleOrmEntity } from './role.orm-entity';
 import { randomUUID } from 'crypto';
 import { Role } from '../../../auth/domain/role.enum';
