@@ -1,7 +1,7 @@
 import { AppException } from './app.exception';
 
-export class ConflictError extends AppException {
+export class NotFoundError extends AppException {
   constructor(message: string) {
-    super(message, 409, 'CONFLICT');
+    super(message, 404, 'NOT_FOUND');
   }
 }

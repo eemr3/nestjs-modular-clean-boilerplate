@@ -11,7 +11,7 @@ const dataSourceOptions: DataSourceOptions = {
   password: process.env.DB_PASS,
   database: process.env.DB_NAME,
   entities: [join(cwd(), '**/*.orm-entity.ts')],
-  migrations: ['src/shared/database/migrations/*.ts'],
+  migrations: ['src/database/migrations/*.ts'],
   synchronize: false, // Essential for production
 };
 
