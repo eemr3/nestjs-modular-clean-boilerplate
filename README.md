@@ -16,6 +16,7 @@ API boilerplate com autenticação JWT, autorização por roles e organização 
 | Class-validator   | —                   |
 | Helmet            | ^8                  |
 | Swagger (OpenAPI) | dev apenas          |
+| @nestjs/terminus  | health / readiness  |
 
 ---
 
@@ -128,6 +129,7 @@ npm run start:dev
 - Prefixo global das rotas: **`/api`** (ver `main.ts`).
 - URL base típica: `http://localhost:<PORT>/api` — o `<PORT>` vem de `PORT` no `.env` (ex.: `3001`).
 - **Swagger** só sobe com `NODE_ENV=development`. Com `SWAGGER_PATH=api/docs` no `.env`, a UI costuma ficar em `http://localhost:<PORT>/api/api/docs` (prefixo global + path). Se preferir `http://localhost:<PORT>/api/docs`, use por exemplo `SWAGGER_PATH=docs`.
+- **Health check:** `GET /health` (sem prefixo `/api`, para facilitar probes em Kubernetes, Render, etc.). Usa `@nestjs/terminus` com **ping ao Postgres**; se o banco estiver indisponível, a resposta indica erro e um status HTTP apropriado.
 
 ---
 
@@ -186,6 +188,7 @@ src/modules/novo-modulo/
 src/
 ├── config/            # env, TypeORM builder, JWT, Swagger, validação opcional
 ├── database/          # DatabaseModule, data-source (CLI), migrations, seeds
+├── health/            # HealthModule (Terminus + TypeORM ping)
 ├── shared/
 │   ├── decorators/
 │   ├── exceptions/
@@ -205,6 +208,7 @@ src/
 - **Helmet** — headers de segurança; em `development` o CSP fica desabilitado para não quebrar o Swagger UI.
 - **CORS** — controlado por `ALLOWED_ORIGINS`.
 - **Trust proxy** — `TRUST_PROXY` quando a API roda atrás de reverse proxy.
+- **Health** — rota dedicada em `/health`; não exige autenticação (configure rede/firewall em produção se necessário).
 
 ---
 
@@ -232,4 +236,4 @@ Erros de validação do Nest (`ValidationPipe`) e outras `HttpException` também
 
 ## Licença
 
-Conforme o campo `license` do `package.json` do repositório.
+MIT — ver o campo `license` no `package.json`.

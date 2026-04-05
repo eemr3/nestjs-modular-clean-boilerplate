@@ -5,6 +5,7 @@ import { DatabaseModule } from './database/database.module';
 import { ConfigModule } from '@nestjs/config';
 import envConfig from './config/env.config';
 import { validateEnv } from './config/env.validation';
+import { HealthModule } from './health/health.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { validateEnv } from './config/env.validation';
       load: [envConfig],
     }),
     DatabaseModule,
+    HealthModule,
     AuthModule,
     UserModule,
   ],

@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { AppExceptionFilter } from './shared/filter/app-exception.filter';
-import { ValidationPipe } from '@nestjs/common';
+import { RequestMethod, ValidationPipe } from '@nestjs/common';
 import { setupSwagger } from './config/swagger.config';
 import { ConfigService } from '@nestjs/config';
 import helmet from 'helmet';
@@ -32,7 +32,9 @@ async function bootstrap() {
     allowedHeaders: ['Authorization', 'Content-Type'],
   });
 
-  app.setGlobalPrefix('api');
+  app.setGlobalPrefix('api', {
+    exclude: [{ path: 'health', method: RequestMethod.GET }],
+  });
 
   if (env === 'development') {
     app.use(
