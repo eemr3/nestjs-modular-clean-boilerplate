@@ -5,7 +5,7 @@ import {
 } from '../../../user/domain/repository/user.repository';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { UnauthorizedError } from 'src/shared/exceptions/nauthorized.error';
+import { UnauthorizedError } from 'src/shared/exceptions/unauthorized.error';
 
 export class LoginUseCase {
   constructor(
