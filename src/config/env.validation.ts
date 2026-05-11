@@ -11,23 +11,19 @@ import {
 class EnvironmentVariables {
   @IsString()
   @IsNotEmpty()
-  DB_HOST: string;
+  MYSQL_DATABASE: string;
 
   @IsString()
   @IsNotEmpty()
-  DB_PORT: string;
+  MYSQL_PASSWORD: string;
 
   @IsString()
   @IsNotEmpty()
-  DB_USER: string;
+  MYSQL_PORT: string;
 
   @IsString()
   @IsNotEmpty()
-  DB_PASSWORD: string;
-
-  @IsString()
-  @IsNotEmpty()
-  DB_NAME: string;
+  MYSQL_USER: string;
 
   /** Se ausente, o `env.config` aplica o próprio fallback. */
   @IsOptional()
@@ -39,7 +35,9 @@ class EnvironmentVariables {
  * Valida o objeto de variáveis de ambiente antes do ConfigModule mesclar com `load`.
  * Devolve o mesmo `config` para não remover chaves (JWT, Swagger, Redis p/ Compose, etc.).
  */
-export function validateEnv(config: Record<string, unknown>): Record<string, unknown> {
+export function validateEnv(
+  config: Record<string, unknown>,
+): Record<string, unknown> {
   const validatedConfig = plainToInstance(EnvironmentVariables, config, {
     enableImplicitConversion: true,
   });

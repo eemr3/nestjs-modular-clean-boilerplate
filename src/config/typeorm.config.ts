@@ -1,6 +1,6 @@
 import { DataSourceOptions } from 'typeorm';
 
-export type PostgresConfig = {
+export type MysqlConfig = {
   host?: string;
   port: number;
   username?: string;
@@ -8,18 +8,18 @@ export type PostgresConfig = {
   name?: string;
 };
 
-const entitiesPattern = `${__dirname}/../**/*.orm-entity{.ts,.js}`;
+const entitiesPattern = `${__dirname}/../**/*.entity{.ts,.js}`;
 const migrationsPattern = `${__dirname}/../database/migrations/*{.ts,.js}`;
 
 /** Opções do TypeORM alinhadas ao objeto `database.postgres` do `env.config`. */
-export function buildTypeOrmOptions(pg: PostgresConfig): DataSourceOptions {
+export function buildTypeOrmOptions(mysql: MysqlConfig): DataSourceOptions {
   return {
-    type: 'postgres',
-    host: pg.host,
-    port: pg.port,
-    username: pg.username,
-    password: pg.password != null ? String(pg.password) : '',
-    database: pg.name,
+    type: 'mysql',
+    host: mysql.host,
+    port: mysql.port,
+    username: mysql.username,
+    password: mysql.password != null ? String(mysql.password) : '',
+    database: mysql.name,
     entities: [entitiesPattern],
     migrations: [migrationsPattern],
     synchronize: false,

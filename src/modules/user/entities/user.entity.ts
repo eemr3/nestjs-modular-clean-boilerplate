@@ -7,10 +7,10 @@ import {
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { RoleOrmEntity } from './role.orm-entity';
+import { RoleEntity } from './role.entity';
 
 @Entity('users')
-export class UserOrmEntity {
+export class UserEntity {
   @PrimaryColumn()
   id: string;
 
@@ -23,9 +23,9 @@ export class UserOrmEntity {
   @Column()
   password: string;
 
-  @ManyToOne(() => RoleOrmEntity, { eager: true })
+  @ManyToOne(() => RoleEntity, { eager: true })
   @JoinColumn({ name: 'role_id' })
-  role: RoleOrmEntity;
+  role: RoleEntity;
 
   @Column()
   isActive: boolean;

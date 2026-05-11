@@ -1,7 +1,7 @@
 import { Global, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { buildTypeOrmOptions, PostgresConfig } from '../config/typeorm.config';
+import { buildTypeOrmOptions, MysqlConfig } from '../config/typeorm.config';
 
 @Global()
 @Module({
@@ -10,7 +10,7 @@ import { buildTypeOrmOptions, PostgresConfig } from '../config/typeorm.config';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => {
-        const pg = configService.getOrThrow<PostgresConfig>('database.postgres');
+        const pg = configService.getOrThrow<MysqlConfig>('database.mysql');
         return buildTypeOrmOptions(pg);
       },
     }),

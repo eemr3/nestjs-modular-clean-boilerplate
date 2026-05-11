@@ -2,8 +2,9 @@ import 'dotenv/config';
 import { DataSource } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import AppDataSource from '../data-source';
-import { RoleOrmEntity } from '../../modules/user/infrastructure/typeorm/role.orm-entity';
-import { UserOrmEntity } from '../../modules/user/infrastructure/typeorm/user.orm-entity';
+import { RoleOrmEntity } from '../../modules/user/entities/role.entity';
+import { UserOrmEntity } from '../../modules/user/entities/user.entity';
+import { Role } from '../../modules/user/roles.enum';
 
 async function seed() {
   const dataSource: DataSource = await AppDataSource.initialize();
@@ -15,26 +16,26 @@ async function seed() {
 
   // ===== Criar Roles =====
   let adminRole = await roleRepository.findOne({
-    where: { name: 'ADMIN' },
+    where: { name: Role.ADMIN },
   });
 
   if (!adminRole) {
     adminRole = roleRepository.create({
       id: crypto.randomUUID(),
-      name: 'ADMIN',
+      name: Role.ADMIN,
     });
     await roleRepository.save(adminRole);
     console.log('✔ ADMIN role created');
   }
 
   let staffRole = await roleRepository.findOne({
-    where: { name: 'STAFF' },
+    where: { name: Role.STAFF },
   });
 
   if (!staffRole) {
     staffRole = roleRepository.create({
       id: crypto.randomUUID(),
-      name: 'STAFF',
+      name: Role.STAFF,
     });
     await roleRepository.save(staffRole);
     console.log('✔ STAFF role created');

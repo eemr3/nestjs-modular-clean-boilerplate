@@ -1,36 +1,14 @@
-version: '3.9'
-
 services:
-  postgres-lab:
-    image: postgres:16
-    container_name: ${DB_CONTAINER}
-    restart: unless-stopped
+  mysql:
+    container_name: mysql-db
+    image: mysql:8.0
+    restart: always
     environment:
-      POSTGRES_DB: ${DB_NAME}
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
     ports:
-      - '${DB_PORT}:5432'
+      - '${MYSQL_PORT}:3306'
     volumes:
-      - pg_lab_data:/var/lib/postgresql/data
-    networks:
-      - lab_net
-
-  redis-lab:
-    image: redis:7
-    container_name: ${REDIS_CONTAINER}
-    restart: unless-stopped
-    ports:
-      - '${REDIS_PORT}:6379'
-    volumes:
-      - redis_lab_data:/data
-    networks:
-      - lab_net
-
+      - mysql_data:/var/lib/mysql-ip_embarca
 volumes:
-  pg_lab_data:
-  redis_lab_data:
-
-networks:
-  lab_net:
-    driver: bridge
+  mysql_data:

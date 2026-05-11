@@ -6,6 +6,10 @@ import { setupSwagger } from './config/swagger.config';
 import { ConfigService } from '@nestjs/config';
 import helmet from 'helmet';
 
+type TrustProxyServer = {
+  set: (setting: 'trust proxy', value: boolean) => void;
+};
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
@@ -21,10 +25,8 @@ async function bootstrap() {
     .filter(Boolean);
 
   const httpAdapter = app.getHttpAdapter();
-  const httpServer = httpAdapter.getInstance();
-  if (typeof httpServer?.set === 'function') {
-    httpServer.set('trust proxy', !!trustProxy);
-  }
+  const httpServer = httpAdapter.getInstance() as TrustProxyServer;
+  httpServer.set('trust proxy', !!trustProxy);
 
   app.enableCors({
     origin: allowedOrigins.length > 0 ? allowedOrigins : false,
@@ -61,4 +63,4 @@ async function bootstrap() {
     console.info(`${name} is running on port ${port} in ${env} mode`);
   });
 }
-bootstrap();
+void bootstrap();

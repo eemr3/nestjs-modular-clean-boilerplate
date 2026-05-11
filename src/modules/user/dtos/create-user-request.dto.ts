@@ -7,8 +7,8 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
-import { MatchField } from '../../../../../shared/decorators/match-field.decorator';
-import { Role } from '../../../../auth/domain/role.enum';
+import { MatchField } from '../../../shared/decorators/match-field.decorator';
+import { Role } from '../roles.enum';
 
 export class CreateUserRequestDto {
   @IsNotEmpty()

@@ -36,8 +36,7 @@ export class AppExceptionFilter implements ExceptionFilter {
       statusCode = exception.getStatus();
       const res = exception.getResponse() as
         | string
-        | { message?: unknown; error?: string; statusCode?: number }
-        | unknown;
+        | { message?: unknown; error?: string; statusCode?: number };
 
       // Nest default: { statusCode, message, error }
       if (typeof res === 'string') {

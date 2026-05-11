@@ -16,13 +16,15 @@ export function MatchField(
       constraints: [field],
       options: validationOptions,
       validator: {
-        validate(value: any, args: ValidationArguments) {
-          const [fieldName] = args.constraints;
-          const relatedValue = (args.object as any)[fieldName];
+        validate(value: unknown, args: ValidationArguments) {
+          const [fieldName] = args.constraints as [string];
+          const relatedValue = (args.object as Record<string, unknown>)[
+            fieldName
+          ];
           return value === relatedValue;
         },
         defaultMessage(args: ValidationArguments) {
-          const [fieldName] = args.constraints;
+          const [fieldName] = args.constraints as [string];
           return `${args.property} must match ${fieldName}`;
         },
       },
